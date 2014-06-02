@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class tabbarViewController;
+
 @interface DPAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -18,5 +21,7 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+
+@property (strong, nonatomic) tabbarViewController *viewController;
 
 @end

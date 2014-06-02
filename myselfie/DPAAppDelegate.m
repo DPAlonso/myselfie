@@ -7,6 +7,13 @@
 //
 
 #import "DPAAppDelegate.h"
+#import "DPAPhotoController.h"
+#import "DPAPhotoCollectionControllerViewController.h"
+#import "DPAMainViewController.h"
+#import "DPAAppDelegate.h"
+#import "tabbarViewController.h"
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation DPAAppDelegate
 
@@ -17,6 +24,69 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    
+    DPAPhotoController *view = [[DPAPhotoController alloc] init];
+    UICollectionViewFlowLayout *aFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    
+    //[aFlowLayout setItemSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
+    [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    DPAPhotoCollectionControllerViewController *second = [[DPAPhotoCollectionControllerViewController alloc] initWithCollectionViewLayout:aFlowLayout];
+    
+    
+    UINavigationController* Navigation = [[UINavigationController alloc] initWithRootViewController:second];
+    
+    [Navigation.navigationBar setBarTintColor: UIColorFromRGB(0x0281ab)];
+    [Navigation.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    
+    UINavigationController *Nav = [[UINavigationController alloc] initWithRootViewController:view];
+    
+    //DPAMainViewController *view = [[DPAMainViewController alloc] init];
+    UITabBarController *tab = [[UITabBarController alloc]init];
+    UITabBarItem *item1 = [[UITabBarItem alloc]  initWithTitle:@"Selfie" image:nil tag:0];
+    UITabBarItem *item2 = [[UITabBarItem alloc]  initWithTitle:@"Mis Selfies" image:nil tag:2];
+    
+    view.tabBarItem = item1;
+    Navigation.tabBarItem = item2;
+    NSArray *controls = [NSArray arrayWithObjects:view,Navigation, nil];
+    [tab setViewControllers:controls];
+    
+    
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    //tab.tabBar.frame = CGRectMake(0, 0, screenWidth, 50);
+    //ab.tabBar.backgroundColor = [UIColor blackColor];
+    //tab.tabBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+    //tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@"tabbar_background.png"];
+
+    
+    
+    UIImage* anImage = [UIImage imageNamed:@"brandselected.png"];
+    UITabBarItem* theItem = [[UITabBarItem alloc] initWithTitle:@" " image:anImage tag:0];
+
+    
+    //DPAPhotoCollectionControllerViewController *v1 = [[DPAPhotoCollectionControllerViewController alloc] init];
+    
+    DPAPhotoController *v2 = [[DPAPhotoController alloc] init];
+    v2.tabBarItem = theItem;
+    NSArray *controllers = [NSArray arrayWithObjects:v2,nil];
+    
+    tabBarController.viewControllers = controllers;
+    //UINavigationController *Nav = [[UINavigationController alloc] initWithRootViewController:view];
+    
+    
+    
+    //self.viewController = [[tabbarViewController alloc] initWithNibName:@"tabbarViewController" bundle:nil];
+    self.window.rootViewController = tab;
+    
+    
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
